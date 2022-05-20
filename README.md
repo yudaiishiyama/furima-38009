@@ -1,24 +1,73 @@
-# README
+# テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## users テーブル
+foreign_key: true
+| Column             | Type   | Options     |
+| ------------------ | ------ | ----------- |
+| nickname           | string | null: false |
+| email              | string | null: false |
+| password           | string | null: false |
+| user_image         | string | null: false |
+| introduction       | string | null: false |
+| family_name        | string | null: false |
+| first_name         | string | null: false |
+| family_name_kana   | string | null: false |
+| first_name_kana    | string | null: false |
+| birthday           |integer | null: false |
+| tel                |integer | null: false |
 
-Things you may want to cover:
 
-* Ruby version
+### Association
 
-* System dependencies
+- has_many :items
+- has_many :record
 
-* Configuration
+## items テーブル
+| Column             | Type      | Options                      |
+| ------------------ | ------    | -----------------------------|
+| user_id            | integer   | null: false,foreign_key: true|
+| name               | string    | null: false,                 |
+| price              | integer   | null: false                  |
+| description        | string    | null: false                  |
+| category           | string    | null: false                  |
+| status             | string    | null: false                  |
+| state              | string    | null: false                  |
+| city               | string    | null: false                  |
+| fee_payer          | integer   | null: false                  |
+| delivery           | string    | null: false                  |
+| delivery_time      | integer   | null: false                  |
 
-* Database creation
+### Association
 
-* Database initialization
+- belongs_to :user
+- belongs_to :record
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+## addressテーブル
+| Column             | Type      | Options                      |
+| ------------------ | ------    | -----------------------------|
+| user_id            | integer   | null: false,foreign_key: true|
+| family_name        | string    | null: false,                 |
+| first_name         | string    | null: false                  |
+| family_name_kana   | string    | null: false                  |
+| first_name_kane    | string    | null: false                  |
+| post_code          | string    | null: false                  |
+| prefecture         | string    | null: false                  |
+| city               | string    | null: false                  |
+| address            | string    | null: false                  |
+| building_name      | string    | null: false                  |
 
-* Deployment instructions
 
-* ...
+### Association
+
+- belongs_to :record
+
+## recordテーブル
+| Column             | Type      | Options                      |
+| ------------------ | ------    | -----------------------------|
+| saler_id           | integer   | null: false,foreign_key: true|
+| buyer_id           | integer   | null: false,foreign_key: true|
+
+### Association
+- belongs_to :items 
+- belongs_to :user
