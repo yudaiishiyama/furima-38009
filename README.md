@@ -1,73 +1,68 @@
 # テーブル設計
 
 ## users テーブル
-foreign_key: true
+
 | Column             | Type   | Options     |
 | ------------------ | ------ | ----------- |
 | nickname           | string | null: false |
-| email              | string | null: false |
-| password           | string | null: false |
-| user_image         | string | null: false |
-| introduction       | string | null: false |
+| email              | string | unique: true|
+| encrypted_password | string | null: false |
 | family_name        | string | null: false |
 | first_name         | string | null: false |
 | family_name_kana   | string | null: false |
 | first_name_kana    | string | null: false |
-| birthday           |integer | null: false |
-| tel                |integer | null: false |
+| date               |integer | null: false |
+
 
 
 ### Association
 
 - has_many :items
-- has_many :record
+- has_many :records
 
 ## items テーブル
 | Column             | Type      | Options                      |
 | ------------------ | ------    | -----------------------------|
-| user_id            | integer   | null: false,foreign_key: true|
+| user               | references| null: false,foreign_key: true|
 | name               | string    | null: false,                 |
 | price              | integer   | null: false                  |
-| description        | string    | null: false                  |
-| category           | string    | null: false                  |
-| status             | string    | null: false                  |
-| state              | string    | null: false                  |
-| city               | string    | null: false                  |
+| description        | text      | null: false                  |
+| status             | integer   | null: false                  |
+| state_id           | integer   | null: false                  |
+| city_id            | integer   | null: false                  |
 | fee_payer          | integer   | null: false                  |
-| delivery           | string    | null: false                  |
+| delivery           | integer   | null: false                  |
 | delivery_time      | integer   | null: false                  |
 
 ### Association
 
 - belongs_to :user
-- belongs_to :record
+- has_one :record
 
 
-## addressテーブル
+## addressesテーブル
 | Column             | Type      | Options                      |
 | ------------------ | ------    | -----------------------------|
-| user_id            | integer   | null: false,foreign_key: true|
-| family_name        | string    | null: false,                 |
-| first_name         | string    | null: false                  |
-| family_name_kana   | string    | null: false                  |
-| first_name_kane    | string    | null: false                  |
-| post_code          | string    | null: false                  |
-| prefecture         | string    | null: false                  |
-| city               | string    | null: false                  |
+| user               | references| null: false,foreign_key: true|
+| post_code          | integer   | null: false                  |
+| state_id           | integer   | null: false                  |
+| city_id            | integer   | null: false                  |
 | address            | string    | null: false                  |
-| building_name      | string    | null: false                  |
+| building_name      | string    |                              |
+| tel                | integer   | null: false                            |
 
 
 ### Association
 
 - belongs_to :record
 
-## recordテーブル
+## recordsテーブル
 | Column             | Type      | Options                      |
 | ------------------ | ------    | -----------------------------|
-| saler_id           | integer   | null: false,foreign_key: true|
-| buyer_id           | integer   | null: false,foreign_key: true|
+| user               | references| null: false,foreign_key: true|
+| itme               | references| null: false,foreign_key: true|
 
 ### Association
-- belongs_to :items 
+- has_one    :item 
 - belongs_to :user
+- belongs_to :address
