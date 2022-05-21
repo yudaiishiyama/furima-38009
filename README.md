@@ -44,7 +44,7 @@
 | ------------------ | ------    | -----------------------------|
 | post_code          | string    | null: false                  |
 | state_id           | integer   | null: false                  |
-| city               | integer   | null: false                  |
+| city               | string    | null: false                  |
 | record             | references| null: false,foreign_key: true|
 | address            | string    | null: false                  |
 | building_name      | string    |                              |
