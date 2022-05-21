@@ -45,7 +45,8 @@
 | post_code          | string    | null: false                  |
 | state_id           | integer   | null: false                  |
 | city               | integer   | null: false                  |
-| address            | references| null: false,foreign_key: true|
+| record             | references| null: false,foreign_key: true|
+| address            | string    | null: false                  |
 | building_name      | string    |                              |
 | tel                | string    | null: false                  |
 
@@ -58,7 +59,7 @@
 | Column             | Type      | Options                      |
 | ------------------ | ------    | -----------------------------|
 | user               | references| null: false,foreign_key: true|
-| itme               | references| null: false,foreign_key: true|
+| item               | references| null: false,foreign_key: true|
 
 ### Association
 - belongs_to :item 
