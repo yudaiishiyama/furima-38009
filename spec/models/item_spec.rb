@@ -85,7 +85,7 @@ RSpec.describe Item, type: :model do
       it '発送までの日数の情報が「---」だと出品できない' do
         @item.delivery_time_id = 0
         @item.valid?
-        expect(@item.errors.full_messages).to include("Delivery time must be other than 0")
+        expect(@item.errors.full_messages).to include('Delivery time must be other than 0')
       end
       it '価格が空欄だと出品できない' do
         @item.price = nil
