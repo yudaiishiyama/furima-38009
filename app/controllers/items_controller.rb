@@ -22,7 +22,21 @@ class ItemsController < ApplicationController
   end
   
   def edit
-    @item = Item.new
+    @item = Item.find(params[:id])
+    if @item.user.id == current_user.id
+    else
+      redirect_to root_path
+    end
+  end
+
+  def update
+    @item = Item.find(params[:id])
+    @item.update(item_params)
+    if @item.save
+      redirect_to item_path
+    else
+      render :edit
+    end
   end
 
   private
