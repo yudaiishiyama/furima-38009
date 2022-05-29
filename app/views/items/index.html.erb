@@ -122,9 +122,11 @@
         <%= link_to item_path(item) do %>
         <div class='item-img-content'>
           <%= image_tag item.image.variant(resize: '500x500'), class: "item-img" if item.image.attached?%>
+          <% if item.record = nil %>
             <div class='sold-out'>
               <span>Sold Out!!</span>
             </div>
+          <% end %>
         </div>
         <div class='item-info'>
           <h3 class='item-name'>
