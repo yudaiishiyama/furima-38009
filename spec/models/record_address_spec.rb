@@ -43,6 +43,16 @@ RSpec.describe RecordAddress, type: :model do
     end
 
     context '配送先情報の保存ができないとき' do
+      it 'user_idが紐ついてなければ保存できない' do
+        @record_address.user_id = nil
+        @record_address.valid?
+        expect(@record_address.errors.full_messages).to include("User can't be blank")
+      end
+      it 'item_idが紐ついてがなければ保存できない' do
+        @record_address.item_id = nil
+        @record_address.valid?
+        expect(@record_address.errors.full_messages).to include("Item can't be blank")
+      end
       it '郵便番号が空だと保存できない' do
         @record_address.post_code = nil
         @record_address.valid?
@@ -73,10 +83,10 @@ RSpec.describe RecordAddress, type: :model do
         @record_address.valid?
         expect(@record_address.errors.full_messages).to include("Tel can't be blank")
       end
-      it '電話番号が半角数値でなければ保存できない' do
+      it '電話番号が全角数値では保存できない' do
         @record_address.tel = '４５６'
         @record_address.valid?
-        expect(@record_address.errors.full_messages).to include('Tel is invalid', 'Tel is not a number')
+        expect(@record_address.errors.full_messages).to include('Tel is invalid')
       end
       it '電話番号にハイフンがあると保存できない' do
         @record_address.tel = '123 - 1234 - 1234'
@@ -85,6 +95,11 @@ RSpec.describe RecordAddress, type: :model do
       end
       it '電話番号が12桁以上あると保存できない' do
         @record_address.tel = '12345678910123111'
+        @record_address.valid?
+        expect(@record_address.errors.full_messages).to include('Tel is invalid')
+      end
+      it '電話番号が9桁以下では保存できない' do
+        @record_address.tel = '123456789'
         @record_address.valid?
         expect(@record_address.errors.full_messages).to include('Tel is invalid')
       end

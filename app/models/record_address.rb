@@ -1,6 +1,6 @@
 class RecordAddress
   include ActiveModel::Model
-  attr_accessor :user_id, :item_id, :post_code, :state_id, :city, :record, :address, :building_name, :tel, :token
+  attr_accessor :user_id, :item_id, :post_code, :state_id, :city, :address, :building_name, :tel, :token
 
   with_options presence: true do
     validates :user_id
@@ -16,7 +16,7 @@ class RecordAddress
 
   def save
     record = Record.create(user_id: user_id, item_id: item_id)
-    Address.create(post_code: post_code, state_id: state_id, city: city, record: record, address: address,
+    Address.create(post_code: post_code, state_id: state_id, city: city, address: address,
                    building_name: building_name, tel: tel, record_id: record.id)
   end
 end
