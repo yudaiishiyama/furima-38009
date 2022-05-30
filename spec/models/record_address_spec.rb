@@ -13,7 +13,7 @@ RSpec.describe RecordAddress, type: :model do
         expect(@record_address).to be_valid
       end
       it '郵便番号が「3桁ハイフン4桁」の組み合わせであれば保存できる' do
-        @record_address.postal_code = '123-4567'
+        @record_address.post_code = '123-4567'
         expect(@record_address).to be_valid
       end
       it '都道府県が「---」以外であれば保存できる' do
@@ -36,18 +36,22 @@ RSpec.describe RecordAddress, type: :model do
         @record_address.tel = '12345678910'
         expect(@record_address).to be_valid
       end
+      it 'tokenがあれば保存できる' do
+        @record_address.token = '"tok_abcdefghijk00000000000000000"'
+        expect(@record_address).to be_valid
+      end
     end
 
     context '配送先情報の保存ができないとき' do
       it '郵便番号が空だと保存できない' do
-        @record_address.postal_code = nil
+        @record_address.post_code = nil
         @record_address.valid?
-        expect(@record_address.errors.full_messages).to include("Postal code can't be blank", "Postal code is invalid")
+        expect(@record_address.errors.full_messages).to include("Post code can't be blank", "Post code is invalid")
       end
       it '郵便番号が「3桁ハイフン4桁」の組み合わせでなければ保存できない' do
-        @record_address.postal_code = '1234567'
+        @record_address.post_code = '1234567'
         @record_address.valid?
-        expect(@record_address.errors.full_messages).to include("Postal code is invalid")
+        expect(@record_address.errors.full_messages).to include("Post code is invalid")
       end
       it '都道府県が「---」だと保存できない' do
         @record_address.state_id = 0
@@ -83,6 +87,11 @@ RSpec.describe RecordAddress, type: :model do
         @record_address.tel = '12345678910123111'
         @record_address.valid?
         expect(@record_address.errors.full_messages).to include('Tel is invalid')
+      end
+      it 'トークンが空だと保存できないこと' do
+        @record_address.token = nil
+        @record_address.valid?
+        expect(@record_address.errors.full_messages).to include("Token can't be blank")
       end
     end
   end
