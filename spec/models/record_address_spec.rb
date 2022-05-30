@@ -4,7 +4,7 @@ RSpec.describe RecordAddress, type: :model do
   before do
     user = FactoryBot.create(:user)
     item = FactoryBot.create(:item)
-    @record_address = FactoryBot.build(:record_address,user_id: user.id, item_id: item.id)
+    @record_address = FactoryBot.build(:record_address, user_id: user.id, item_id: item.id)
   end
 
   describe '配送先情報の保存' do
@@ -46,17 +46,17 @@ RSpec.describe RecordAddress, type: :model do
       it '郵便番号が空だと保存できない' do
         @record_address.post_code = nil
         @record_address.valid?
-        expect(@record_address.errors.full_messages).to include("Post code can't be blank", "Post code is invalid")
+        expect(@record_address.errors.full_messages).to include("Post code can't be blank", 'Post code is invalid')
       end
       it '郵便番号が「3桁ハイフン4桁」の組み合わせでなければ保存できない' do
         @record_address.post_code = '1234567'
         @record_address.valid?
-        expect(@record_address.errors.full_messages).to include("Post code is invalid")
+        expect(@record_address.errors.full_messages).to include('Post code is invalid')
       end
       it '都道府県が「---」だと保存できない' do
         @record_address.state_id = 0
         @record_address.valid?
-        expect(@record_address.errors.full_messages).to include("State must be other than 0")
+        expect(@record_address.errors.full_messages).to include('State must be other than 0')
       end
       it '市区町村が空だと保存できないこと' do
         @record_address.city = nil
@@ -76,7 +76,7 @@ RSpec.describe RecordAddress, type: :model do
       it '電話番号が半角数値でなければ保存できない' do
         @record_address.tel = '４５６'
         @record_address.valid?
-        expect(@record_address.errors.full_messages).to include("Tel is invalid", "Tel is not a number")
+        expect(@record_address.errors.full_messages).to include('Tel is invalid', 'Tel is not a number')
       end
       it '電話番号にハイフンがあると保存できない' do
         @record_address.tel = '123 - 1234 - 1234'
