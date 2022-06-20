@@ -32,3 +32,11 @@
 <% end %>
 
 <%= render "shared/second-footer"%>
+
+<div class="card">
+  <%= link_to image_tag(@post.image.variant(resize: '500x500'),class: :card_img) if @post.image.attached? %>
+  <div class="card__body">
+    <%= link_to post.address, class: :card_address%>
+    <%= link_to  post.user.name,  method: :get, class: :card_user %>
+  </div>
+</div>
